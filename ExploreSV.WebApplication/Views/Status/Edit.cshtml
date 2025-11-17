@@ -1,0 +1,136 @@
+﻿@model ExploreSV.BusinessLogic.DTOs.UpdateStatusRequest
+
+@{
+    ViewData["Title"] = "Editar Estado";
+}
+
+<div class="edit-container">
+    <div class="edit-header">
+        <h1 class="edit-title">
+            <i class="fas fa-edit"></i> Editar Estado
+        </h1>
+    </div>
+
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="StatusId" />
+
+        <div class="status-details">
+            <h4>Detalles del Estado</h4>
+            <hr />
+
+            <div class="form-group">
+                <label class="control-label">Nombre</label>
+                <input asp-for="StatusName" class="form-control" />
+                <span asp-validation-for="StatusName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="edit-actions">
+            <input type="submit" value="Guardar Cambios" class="btn-save" />
+            <a asp-action="Index" class="btn-cancel">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+    }
+
+    .edit-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .edit-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f1f1f1;
+    }
+
+    .edit-title {
+        color: #17a2b8; 
+        font-weight: 700;
+        font-size: 1.8rem;
+    }
+
+    .status-details {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+        .form-group label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+    .edit-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn-save {
+        background-color: #28a745; 
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-save:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+        }
+
+    .btn-cancel {
+        background-color: #6c757d; 
+        color: white !important;
+        border: none;
+        border-radius: 6px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+        .btn-cancel:hover {
+            background-color: #5a6268;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+            text-decoration: none;
+        }
+</style>
+
+

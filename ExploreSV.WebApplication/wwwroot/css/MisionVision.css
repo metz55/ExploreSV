@@ -1,0 +1,138 @@
+﻿body {
+    background: url('../Images/Playa1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+
+.mission-vision-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.mission-card {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    background: rgba(128, 128, 128, 0.5);
+    backdrop-filter: blur(5px); /* Efecto de vidrio opcional */
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s ease;
+    text-align: center;
+}
+
+    .mission-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .mission-card h2 {
+        color: white;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        position: relative;
+    }
+
+        .mission-card h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: #415a77;
+            border-radius: 2px;
+        }
+
+    .mission-card p {
+        color: white;
+        line-height: 1.7;
+        font-size: 1.1rem;
+        margin-top: 1.8rem;
+    }
+
+.mission-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #415a77;
+    border-radius: 50%;
+    box-shadow: 0 6px 15px rgba(65, 90, 119, 0.4);
+}
+
+    .mission-icon svg {
+        width: 36px;
+        height: 36px;
+        fill: white;
+    }
+
+.vision-card {
+    border-top: 5px solid #415a77;
+}
+
+.mission-card.mission-card {
+    border-top: 5px solid #778da9;
+}
+
+/* Responsive sin afectar navbar */
+@media (max-width: 992px) {
+    .mission-vision-container {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .mission-card {
+        padding: 2rem;
+        min-width: 280px;
+    }
+}
+
+@media (max-width: 576px) {
+    .mission-vision-background {
+        padding-top: 70px; /* Ajuste para móviles */
+    }
+
+    .mission-card {
+        min-width: 100%;
+        padding: 1.8rem;
+    }
+
+        .mission-card h2 {
+            font-size: 1.6rem;
+        }
+
+        .mission-card p {
+            font-size: 1rem;
+        }
+}
+
+
+.mission-png-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.mission-icon {
+    /* Mantén los estilos existentes y agrega: */
+    padding: 10px; /* Asegura espacio alrededor del icono */
+}
+
+    /* Opcional: si necesitas ajustar el tamaño de los iconos PNG */
+    .mission-icon img {
+        max-width: 100%;
+        max-height: 100%;
+    }

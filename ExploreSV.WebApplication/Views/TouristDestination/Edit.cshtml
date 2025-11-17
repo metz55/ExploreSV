@@ -1,0 +1,255 @@
+﻿@model ExploreSV.BusinessLogic.DTOs.UpdateTouristDestinationRequest
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<div class="edit-container">
+    <div class="edit-header">
+        <h2 class="edit-title">Editar Destino Turístico</h2>
+        <p class="edit-subtitle">Modifica la información del destino</p>
+    </div>
+
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="TouristDestinationId" type="hidden" />
+
+        <div class="row">
+            <!-- Columna Izquierda -->
+            <div class="col-md-6">
+                <div class="form-section">
+                    <label asp-for="TouristDestinationTitle" class="form-label">Título</label>
+                    <input asp-for="TouristDestinationTitle" class="form-control form-control-edit" />
+                    <span asp-validation-for="TouristDestinationTitle" class="text-danger validation-message"></span>
+                </div>
+
+                <div class="form-section">
+                    <label asp-for="TouristDestinationDescription" class="form-label">Descripción</label>
+                    <textarea asp-for="TouristDestinationDescription" class="form-control form-control-edit" rows="5"></textarea>
+                    <span asp-validation-for="TouristDestinationDescription" class="text-danger validation-message"></span>
+                </div>
+
+                <div class="form-section">
+                    <label asp-for="TouristDestinationLocation" class="form-label">Ubicación</label>
+                    <input asp-for="TouristDestinationLocation" class="form-control form-control-edit" />
+                    <span asp-validation-for="TouristDestinationLocation" class="text-danger validation-message"></span>
+                </div>
+            </div>
+
+            <!-- Columna Derecha -->
+            <div class="col-md-6">
+                <div class="form-section">
+                    <label asp-for="StatusId" class="form-label">Estado</label>
+                    <select asp-for="StatusId" class="form-control form-control-edit" asp-items="@(ViewData["StatusId"] as SelectList)" required>
+                        <option value="">Seleccione un Estado</option>
+                    </select>
+                    <span asp-validation-for="StatusId" class="text-danger validation-message"></span>
+                </div>
+
+                <div class="form-section">
+                    <label asp-for="CategoryId" class="form-label">Categoría</label>
+                    <select asp-for="CategoryId" class="form-control form-control-edit" asp-items="ViewBag.CategoryId">
+                        <option value="">Seleccione una Categoria</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger validation-message"></span>
+                </div>
+
+                <div class="form-section">
+                    <label asp-for="DepartmentId" class="form-label">Departamento</label>
+                    <select asp-for="DepartmentId" class="form-control form-control-edit" asp-items="ViewBag.DepartmentId">
+                        <option value="">Seleccione un Departamento</option>
+                    </select>
+                    <span asp-validation-for="DepartmentId" class="text-danger validation-message"></span>
+                </div>
+
+                <div class="form-section">
+                    <label asp-for="TouristDestinationSchedule" class="form-label">Horario</label>
+                    <input asp-for="TouristDestinationSchedule" class="form-control form-control-edit" />
+                    <span asp-validation-for="TouristDestinationSchedule" class="text-danger validation-message"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de imágenes -->
+        <div class="image-upload-section">
+            <label class="form-label">Agregar nuevas imágenes</label>
+            <input type="file" name="files" class="form-control form-control-edit" accept="image/*" multiple />
+            <small class="form-text text-muted">Puedes seleccionar múltiples imágenes (JPEG, PNG)</small>
+
+            <!-- Vista previa de nuevas imágenes -->
+            <div class="mt-3">
+                <p class="preview-title">Vista previa de nuevas imágenes:</p>
+                <div id="preview" class="d-flex flex-wrap gap-2"></div>
+            </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="form-section text-end mt-4">
+            <button type="submit" class="btn btn-save btn-edit">
+                <i class="fas fa-save"></i> Guardar cambios
+            </button>
+            <a asp-action="Index" class="btn btn-cancel btn-edit">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .edit-container {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        margin: 20px auto;
+        max-width: 1200px;
+    }
+
+    .edit-header {
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+    }
+
+    .edit-title {
+        color: #2c3e50;
+        font-weight: 700;
+    }
+
+    .edit-subtitle {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+    }
+
+    .form-section {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control-edit {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        transition: all 0.3s ease;
+        padding: 10px 15px;
+    }
+
+        .form-control-edit:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.15);
+        }
+
+    textarea.form-control-edit {
+        min-height: 120px;
+    }
+
+    .btn-edit {
+        border-radius: 6px;
+        padding: 10px 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+    .btn-save {
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-save:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+    .btn-cancel {
+        background-color: #6c757d;
+        color: white;
+        margin-left: 10px;
+    }
+
+        .btn-cancel:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+
+    .image-upload-section {
+        background-color: #f1f8fe;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 20px;
+        border: 1px dashed #007bff;
+    }
+
+    .preview-title {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    #preview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+        #preview img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+            #preview img:hover {
+                transform: scale(1.05);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                border-color: #007bff;
+            }
+
+    .validation-message {
+        font-size: 0.85rem;
+        margin-top: 5px;
+    }
+
+    .current-images {
+        margin-top: 30px;
+    }
+
+    .current-images-title {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 15px;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Script para previsualización de imágenes
+        document.querySelector('input[type="file"]').addEventListener('change', function(event) {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = '';
+
+            Array.from(event.target.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('img-thumbnail');
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
+}

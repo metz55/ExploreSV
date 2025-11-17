@@ -1,0 +1,305 @@
+﻿@using ExploreSV.BusinessLogic.Utils
+@using ExploreSV.BusinessLogic.DTOs
+@model PaginatedList<TouristDestinationResponse>
+
+@{
+    ViewData["Title"] = "Destinos Turísticos";
+}
+
+<div class="destinations-container">
+    <div class="destinations-header">
+        <h1 class="destinations-title">Destinos Turísticos</h1>
+        <a asp-action="Create" class="btn btn-create">
+            <i class="fas fa-plus-circle"></i> Crear Destino
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-premium">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Categoría</th>
+                    <th>Descripción</th>
+                    <th>Ubicación</th>
+                    <th>Departamento</th>
+                    <th>Horario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.TouristDestinationTitle)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TouristDestinationDescription)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TouristDestinationLocation)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DepartamentName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TouristDestinationSchedule)</td>
+                        <td class="actions-cell">
+                            <div class="d-flex">
+                                <a asp-action="Details" asp-route-id="@item.TouristDestinationId"
+                                   class="btn btn-action btn-view me-2">
+                                    <i class="fas fa-eye"></i> Detalles
+                                </a>
+
+                                <button type="button" class="btn btn-action btn-images me-2"
+                                        data-bs-toggle="modal" data-bs-target="#modalImages_@item.TouristDestinationId">
+                                    <i class="fas fa-images"></i> Imágenes
+                                </button>
+
+                                <a asp-action="Edit" asp-route-id="@item.TouristDestinationId"
+                                   class="btn btn-action btn-edit">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Modal de imágenes -->
+                    <div class="modal fade modal-premium" id="modalImages_@item.TouristDestinationId" tabindex="-1"
+                         aria-labelledby="modalLabel_@item.TouristDestinationId" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel_@item.TouristDestinationId">
+                                        <i class="fas fa-images me-2"></i>
+                                        Imágenes de @item.TouristDestinationTitle
+                                    </h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    @if (item.Images != null && item.Images.Any())
+                                    {
+                                        <div class="row">
+                                            @foreach (var image in item.Images)
+                                            {
+                                                <div class="col-md-6 mb-4">
+                                                    <img src="@image.ImageUrl" alt="Imagen" class="img-fluid rounded">
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="text-center py-4 no-images">
+                                            <i class="fas fa-image fa-3x mb-3"></i>
+                                            <p>No hay imágenes disponibles</p>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        <i class="fas fa-times me-1"></i> Cerrar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model != null)
+    {
+        <div class="pagination-controls">
+            @if (Model.HasPreviousPage)
+            {
+                <a asp-action="Index" asp-route-pageNumber="@(Model.PageNumber - 1)"
+                   asp-route-pageSize="@Model.PageSize"
+                   class="pagination-btn">← Anterior</a>
+            }
+
+            <span class="pagination-info">Página @Model.PageNumber de @Model.TotalPages</span>
+
+            @if (Model.HasNextPage)
+            {
+                <a asp-action="Index" asp-route-pageNumber="@(Model.PageNumber + 1)"
+                   asp-route-pageSize="@Model.PageSize"
+                   class="pagination-btn">Siguiente →</a>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    .destinations-container {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        margin-top: 20px;
+        max-width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .destinations-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid #f1f1f1;
+    }
+
+    .destinations-title {
+        color: #2c3e50;
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.4rem;
+    }
+
+    .btn-create {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+        .btn-create:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    .table-premium {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+    }
+
+        .table-premium th,
+        .table-premium td {
+            padding: 12px;
+            border-bottom: 1px solid #f1f1f1;
+            border-right: 1px solid #f1f1f1;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .table-premium thead tr {
+            background: linear-gradient(135deg, #007bff 0%, #00b4ff 100%);
+            color: white;
+        }
+
+        .table-premium thead th {
+            border-bottom: 2px solid #e0e0e0;
+            padding: 12px;
+            font-size: 0.9rem;
+        }
+
+    .btn-action {
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: none;
+        margin-right: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .btn-view {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .btn-images {
+        background-color: #6f42c1;
+        color: white;
+    }
+
+    .btn-edit {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-premium .modal-content {
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-premium .modal-header {
+        background: linear-gradient(135deg, #007bff 0%, #00b4ff 100%);
+        color: white;
+        border-bottom: none;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .modal-premium .modal-title {
+        font-weight: 600;
+    }
+
+    .modal-premium .modal-body img {
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+        .modal-premium .modal-body img:hover {
+            transform: scale(1.02);
+        }
+
+    .no-images {
+        color: #6c757d;
+        font-style: italic;
+    }
+
+    .btn-close-white {
+        filter: invert(1);
+    }
+
+    .actions-cell {
+        white-space: nowrap;
+    }
+
+    /* --- Estilos de paginación (forzados) --- */
+    .pagination-controls {
+        margin-top: 50px !important; /* más espacio sobre la paginación */
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 20px !important;
+    }
+
+    .pagination-btn {
+        background-color: #007bff !important; /* azul principal */
+        color: #fff !important; /* texto blanco */
+        padding: 10px 18px !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
+        border: none !important;
+        display: inline-block !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1) !important;
+    }
+
+        .pagination-btn:hover {
+            background-color: #0056b3 !important; /* azul más oscuro en hover */
+            transform: translateY(-2px) !important;
+        }
+
+    .pagination-info {
+        font-weight: 600 !important;
+        color: #2c3e50 !important;
+    }
+</style>

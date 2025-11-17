@@ -1,0 +1,191 @@
+﻿@using ExploreSV.BusinessLogic.Utils
+@using ExploreSV.BusinessLogic.DTOs
+@model PaginatedList<TouristDestinationResponse>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+    <h2 class="text-center font-bold text-3xl mb-4">Destinos Turísticos</h2>
+    <p class="text-center text-gray-600 mb-8">
+        Explora diferentes destinos y encuentra tu mejor lugar para vacacionar.
+    </p>
+
+    <div class="grid">
+        @if (Model != null && Model.Items != null)
+        {
+            @foreach (var item in Model.Items)
+            {
+                <div class="card">
+                    <div class="image-container">
+                        @if (item.Images != null && item.Images.Any())
+                        {
+                            <img src="@item.Images.FirstOrDefault().ImageUrl" alt="@item.TouristDestinationTitle">
+                        }
+                        else
+                        {
+                            <div class="no-image">Imagen no disponible</div>
+                        }
+                    </div>
+                    <div class="content">
+                        <div class="tags">
+                            <span class="category">📍 @item.CategoryName</span>
+                            <span class="location">📌 @item.TouristDestinationLocation</span>
+                        </div>
+                        <h3>@item.TouristDestinationTitle</h3>
+                        <p class="schedule">@item.TouristDestinationSchedule</p>
+                        <a href="@Url.Action("Details", "TouristDestination", new { id = item.TouristDestinationId })" class="see-more">Ver más →</a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    @if (Model != null)
+    {
+        <div class="pagination-controls">
+            @if (Model.HasPreviousPage)
+            {
+                <a asp-action="Index" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize"
+                   class="pagination-btn">← Anterior</a>
+            }
+
+            <span class="pagination-info">Página @Model.PageNumber de @Model.TotalPages</span>
+
+            @if (Model.HasNextPage)
+            {
+                <a asp-action="Index" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize"
+                   class="pagination-btn">Siguiente →</a>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+    }
+
+    .container {
+        max-width: 1150px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 18px;
+    }
+
+    .card {
+        width: 400px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: left;
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    .image-container {
+        height: 220px;
+        background: #f3f3f3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .no-image {
+        color: #888;
+        font-size: 14px;
+    }
+
+    .content {
+        padding: 16px;
+    }
+
+    .tags {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 6px;
+    }
+
+    .category {
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .location {
+        font-style: italic;
+    }
+
+    h3 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 6px;
+    }
+
+    .schedule {
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .see-more {
+        color: #1e40af;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .see-more:hover {
+            text-decoration: underline;
+        }
+
+    /* --- Estilos de paginación (mejorados y forzados) --- */
+    .pagination-controls {
+        margin-top: 50px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 20px !important;
+    }
+
+    .pagination-btn {
+        background-color: #007bff !important;
+        color: #fff !important;
+        padding: 10px 18px !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
+        border: none !important;
+        display: inline-block !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1) !important;
+    }
+
+        .pagination-btn:hover {
+            background-color: #0056b3 !important;
+            transform: translateY(-2px) !important;
+        }
+
+    .pagination-info {
+        font-weight: 600 !important;
+        color: #2c3e50 !important;
+    }
+</style>
