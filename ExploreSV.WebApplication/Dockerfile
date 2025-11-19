@@ -23,7 +23,8 @@ COPY . .
 
 
 # Forzar copia de wwwroot (si Render la ignora)
-COPY ExploreSV.WebApplication/wwwroot /src/ExploreSV.WebApplication/wwwroot
+# Copiar todo el contenido de wwwroot al contenedor
+COPY ExploreSV.WebApplication/wwwroot /app/wwwroot
 
 WORKDIR "/src/ExploreSV.WebApplication"
 RUN dotnet build "./ExploreSV.WebApplication.csproj" -c $BUILD_CONFIGURATION -o /app/build
