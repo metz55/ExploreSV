@@ -20,6 +20,8 @@ RUN dotnet restore "./ExploreSV.WebApplication/ExploreSV.WebApplication.csproj"
 # Copiar todo el código
 COPY . .
 
+
+
 # Forzar copia de wwwroot (si Render la ignora)
 COPY ExploreSV.WebApplication/wwwroot /src/ExploreSV.WebApplication/wwwroot
 
