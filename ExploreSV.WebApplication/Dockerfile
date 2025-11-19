@@ -18,6 +18,7 @@ COPY ["ExploreSV.Entities/ExploreSV.Entities.csproj", "ExploreSV.Entities/"]
 
 RUN dotnet restore "./ExploreSV.WebApplication/ExploreSV.WebApplication.csproj"
 
+
 # Copiar todo el código, incluyendo wwwroot
 COPY . .
 
